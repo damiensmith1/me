@@ -36,6 +36,15 @@ yarn-error.log*
 # vercel
 .vercel
 
+# AI agent/assistant config and instructions — not part of the app
+CLAUDE.md
+AGENTS.md
+.claude/
+.cursor/
+.cursorrules
+.windsurfrules
+.github/copilot-instructions.md
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
