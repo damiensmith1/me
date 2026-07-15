@@ -1,26 +1,104 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f7f2e7;
+  --surface: #efe7d5;
+  --surface-hover: #e6dcc5;
+  --border: rgba(59, 47, 30, 0.14);
+  --border-strong: rgba(59, 47, 30, 0.24);
+  --foreground: #2b2420;
+  --muted: #6e6255;
+  --accent: #4a5d3f;
+  --accent-hover: #3a4a32;
+  --accent-foreground: #f7f2e7;
+  --accent-muted: rgba(74, 93, 63, 0.12);
+  --success: #4a5d3f;
+  --error: #a5402a;
 }
 
 @theme inline {
   --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-hover: var(--surface-hover);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
   --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent-muted: var(--accent-muted);
+  --color-success: var(--success);
+  --color-error: var(--error);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-serif: var(--font-instrument-serif);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
+  color-scheme: light;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+}
+
+::selection {
+  background: var(--accent-muted);
+  color: var(--foreground);
+}
+
+/* Rotated section markers (e.g. "SERVICES", "ABOUT") read bottom-to-top.
+   Letter-spacing utilities apply along the vertical axis in this writing
+   mode, so the tracking is set explicitly here instead of via a `tracking-*`
+   class at each call site. */
+.vertical-label {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  letter-spacing: 0.1em;
+  white-space: nowrap;
+}
+
+/* Smooth height-open effect for hover-expanding rows, no JS required. */
+.row-detail {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.group:hover .row-detail,
+.group:focus-within .row-detail {
+  grid-template-rows: 1fr;
+}
+
+.row-detail > div {
+  overflow: hidden;
+}
+
+/* Reveal-on-scroll: JS toggles data-visible once IntersectionObserver fires. */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(12px);
+  transition:
+    opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+[data-reveal="visible"] {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  [data-reveal] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
 }

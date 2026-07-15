@@ -2,6 +2,9 @@
   "name": "damiensmith-dev",
   "version": "0.1.0",
   "private": true,
+  "description": "Personal site and freelance business site for Damien Smith — software engineer specializing in backend and full-stack development.",
+  "author": "Damien Smith",
+  "license": "MIT",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -11,7 +14,9 @@
   "dependencies": {
     "next": "16.2.10",
     "react": "19.2.4",
-    "react-dom": "19.2.4"
+    "react-dom": "19.2.4",
+    "resend": "^6.17.1",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
