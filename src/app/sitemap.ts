@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { siteConfig } from "@/lib/content";
+import { projects } from "@/lib/projects";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const routes: Array<{
@@ -8,6 +9,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: number;
   }> = [
     { path: "", changeFrequency: "monthly", priority: 1 },
+    { path: "/projects", changeFrequency: "monthly", priority: 0.8 },
+    ...projects.map((project) => ({
+      path: `/projects/${project.slug}`,
+      changeFrequency: "monthly" as const,
+      priority: 0.6,
+    })),
   ];
 
   return routes.map((route) => ({

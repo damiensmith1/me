@@ -15,15 +15,6 @@ export type ExperienceItem = {
   org: string;
 };
 
-export type Project = {
-  name: string;
-  description: string;
-  tags: string[];
-  href?: string;
-  // Optional terminal-style snippet shown on featured projects.
-  terminal?: string[];
-};
-
 export type Post = {
   date: string; // YYYY-MM-DD
   title: string;
@@ -84,33 +75,10 @@ export const aboutContent = {
 
 export const projectsContent = {
   title: "Things I've built on my own time.",
-  // The first project is shown large; the rest sit in a two-column grid.
-  items: [
-    {
-      name: "Clance",
-      description:
-        "A desktop developer tool built on Claude Code. It runs agent sessions alongside your other apps and can read what's on your screen, so the agent works from your actual context.",
-      tags: ["TypeScript", "Electron", "Claude Agent SDK", "MCP"],
-      terminal: [
-        "$ clance",
-        "  sessions   3 running · 1 waiting on you",
-        "  context    reading: VS Code, Chrome, Terminal",
-      ],
-    },
-    // TODO: fill in and uncomment.
-    // {
-    //   name: "Observatory",
-    //   description: "A one-line description of the project and the problem it solves.",
-    //   tags: ["React", "Node"],
-    //   href: "https://github.com/damiensmith1/...",
-    // },
-    // {
-    //   name: "Toy database",
-    //   description: "A storage engine written from scratch to learn how databases really work.",
-    //   tags: ["Go", "Storage engines"],
-    //   href: "https://github.com/damiensmith1/...",
-    // },
-  ] as Project[],
+  allLabel: "See all projects",
+  pageTitle: "Projects",
+  pageIntro:
+    "Libraries, experiments, and small apps I've built outside of work. Most are open source on GitHub.",
 };
 
 // The Writing section and its nav link stay hidden while this list is empty.
@@ -131,7 +99,7 @@ export const resumeContent = {
 
 export const navItems: NavItem[] = [
   { label: "About", href: "/#about" },
-  { label: "Projects", href: "/#projects" },
+  { label: "Projects", href: "/projects" },
   ...(writingContent.posts.length > 0
     ? [{ label: "Writing", href: "/#writing" }]
     : []),
