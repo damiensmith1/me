@@ -1,43 +1,49 @@
 @import "tailwindcss";
 
+/* Light palette. Dark values are redefined below; src/lib/palette.ts mirrors
+   the light values for the OG image, icons, and manifest. */
 :root {
-  --background: #f7f2e7;
-  --surface: #efe7d5;
-  --surface-hover: #e6dcc5;
-  --border: rgba(59, 47, 30, 0.14);
-  --border-strong: rgba(59, 47, 30, 0.24);
-  --foreground: #2b2420;
-  --muted: #6e6255;
-  --accent: #4a5d3f;
-  --accent-hover: #3a4a32;
-  --accent-foreground: #f7f2e7;
-  --accent-muted: rgba(74, 93, 63, 0.12);
-  --success: #4a5d3f;
-  --error: #a5402a;
+  --background: #f2f3ef;
+  --surface: #e8eae4;
+  --foreground: #15181b;
+  --muted: #5d636a;
+  --rule: #cfd3cb;
+  --accent: #2847c9;
+  --accent-soft: rgba(40, 71, 201, 0.09);
+  --mark: #b0561e;
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #111315;
+    --surface: #1a1d20;
+    --foreground: #e6e8e3;
+    --muted: #969ca2;
+    --rule: #2c3034;
+    --accent: #8ea4ff;
+    --accent-soft: rgba(142, 164, 255, 0.12);
+    --mark: #e08a55;
+    color-scheme: dark;
+  }
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-surface: var(--surface);
-  --color-surface-hover: var(--surface-hover);
-  --color-border: var(--border);
-  --color-border-strong: var(--border-strong);
   --color-foreground: var(--foreground);
   --color-muted: var(--muted);
+  --color-rule: var(--rule);
   --color-accent: var(--accent);
-  --color-accent-hover: var(--accent-hover);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-accent-muted: var(--accent-muted);
-  --color-success: var(--success);
-  --color-error: var(--error);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-  --font-serif: var(--font-instrument-serif);
+  --color-accent-soft: var(--accent-soft);
+  --color-mark: var(--mark);
+  --font-display: var(--font-bricolage);
+  --font-serif: var(--font-newsreader);
+  --font-mono: var(--font-jetbrains-mono);
 }
 
 html {
   scroll-behavior: smooth;
-  color-scheme: light;
 }
 
 body {
@@ -46,49 +52,26 @@ body {
 }
 
 ::selection {
-  background: var(--accent-muted);
+  background: var(--accent-soft);
   color: var(--foreground);
 }
 
-/* Rotated section markers (e.g. "SERVICES", "ABOUT") read bottom-to-top.
-   Letter-spacing utilities apply along the vertical axis in this writing
-   mode, so the tracking is set explicitly here instead of via a `tracking-*`
-   class at each call site. */
-.vertical-label {
-  writing-mode: vertical-rl;
-  transform: rotate(180deg);
-  letter-spacing: 0.1em;
-  white-space: nowrap;
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 3px;
 }
 
-/* Smooth height-open effect for hover-expanding rows, no JS required. */
-.row-detail {
-  display: grid;
-  grid-template-rows: 0fr;
-  transition: grid-template-rows 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.group:hover .row-detail,
-.group:focus-within .row-detail {
-  grid-template-rows: 1fr;
-}
-
-.row-detail > div {
-  overflow: hidden;
-}
-
-/* Reveal-on-scroll: JS toggles data-visible once IntersectionObserver fires. */
-[data-reveal] {
-  opacity: 0;
-  transform: translateY(12px);
-  transition:
-    opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
-    transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-[data-reveal="visible"] {
-  opacity: 1;
-  transform: translateY(0);
+/* Drop cap on the first paragraph of the About section. */
+.drop-cap::first-letter {
+  float: left;
+  margin: 0.35rem 0.5rem 0 0;
+  font-family: var(--font-bricolage);
+  font-size: 3.4rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--accent);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -96,9 +79,7 @@ body {
     scroll-behavior: auto;
   }
 
-  [data-reveal] {
-    opacity: 1;
-    transform: none;
-    transition: none;
+  * {
+    transition: none !important;
   }
 }

@@ -1,10 +1,8 @@
 import { Hero } from "@/components/sections/hero";
 import { About } from "@/components/sections/about";
-import { Services } from "@/components/sections/services";
-import { Technologies } from "@/components/sections/technologies";
-import { Process } from "@/components/sections/process";
-import { Why } from "@/components/sections/why";
-import { Contact } from "@/components/sections/contact";
+import { Projects } from "@/components/sections/projects";
+import { Writing } from "@/components/sections/writing";
+import { Resume } from "@/components/sections/resume";
 import { ScrollSpy } from "@/components/scroll-spy";
 
 export default function Home() {
@@ -13,11 +11,9 @@ export default function Home() {
       <ScrollSpy />
       <Hero />
       <About />
-      <Services />
-      <Technologies />
-      <Process />
-      <Why />
-      <Contact />
+      <Projects />
+      <Writing />
+      <Resume />
     </>
   );
 }
