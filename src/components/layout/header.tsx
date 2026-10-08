@@ -3,11 +3,11 @@
 import type { MouseEvent } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { navItems } from "@/lib/content";
+import type { NavItem } from "@/lib/content";
 import { Container } from "@/components/ui/container";
 import { NavLink } from "@/components/ui/nav-link";
 
-export function Header() {
+export function Header({ navItems }: { navItems: NavItem[] }) {
   const pathname = usePathname();
 
   function handleLogoClick(event: MouseEvent<HTMLAnchorElement>) {

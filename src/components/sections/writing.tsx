@@ -1,30 +1,27 @@
+import Link from "next/link";
 import { writingContent } from "@/lib/content";
+import { getPosts } from "@/lib/blog";
 import { Row, RowTitle } from "@/components/ui/row";
+import { PostList } from "@/components/post-list";
+
+const HOME_POST_COUNT = 3;
 
 export function Writing() {
-  if (writingContent.posts.length === 0) return null;
+  const posts = getPosts();
+  if (posts.length === 0) return null;
 
   return (
     <Row id="writing" rail="Writing">
       <RowTitle>{writingContent.title}</RowTitle>
-      <ul className="border-b border-rule">
-        {writingContent.posts.map((post) => (
-          <li key={post.href} className="border-t border-rule">
-            <a
-              href={post.href}
-              className="group grid items-baseline gap-1 py-4 sm:grid-cols-[6.5rem_minmax(0,1fr)_auto] sm:gap-4"
-            >
-              <span className="font-mono text-xs text-muted tabular-nums">{post.date}</span>
-              <span className="font-display text-lg leading-snug font-medium tracking-[-0.01em] transition-colors group-hover:text-accent">
-                {post.title}
-              </span>
-              <span className="hidden font-mono text-xs text-muted sm:inline">
-                {post.readingTime}
-              </span>
-            </a>
-          </li>
-        ))}
-      </ul>
+      <PostList posts={posts.slice(0, HOME_POST_COUNT)} />
+      {posts.length > HOME_POST_COUNT ? (
+        <Link
+          href="/blog"
+          className="mt-6 inline-flex font-mono text-sm font-medium text-accent hover:underline"
+        >
+          {writingContent.allLabel} ({posts.length}) →
+        </Link>
+      ) : null}
     </Row>
   );
 }

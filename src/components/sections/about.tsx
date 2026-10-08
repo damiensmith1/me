@@ -1,4 +1,3 @@
-import { Fragment } from "react";
 import { aboutContent } from "@/lib/content";
 import { Row, RowTitle } from "@/components/ui/row";
 
@@ -8,14 +7,9 @@ export function About() {
       <RowTitle>{aboutContent.title}</RowTitle>
 
       {aboutContent.paragraphs.map((paragraph, i) => (
-        <Fragment key={i}>
-          {i === aboutContent.pullQuoteAfter ? (
-            <p className="my-8 border-l-2 border-accent pl-4 text-[1.35rem] text-muted italic">
-              {aboutContent.pullQuote}
-            </p>
-          ) : null}
-          <p className={i === 0 ? "drop-cap mb-5" : "mb-5"}>{paragraph}</p>
-        </Fragment>
+        <p key={i} className={i === 0 ? "drop-cap mb-5" : "mb-5"}>
+          {paragraph}
+        </p>
       ))}
 
       <ol className="mt-10">
