@@ -1,59 +1,50 @@
-import { heroContent } from "@/lib/content";
-import { Container } from "@/components/ui/container";
-import { NavLink } from "@/components/ui/nav-link";
+import { heroContent, siteConfig, socialLinks } from "@/lib/content";
+import { Row } from "@/components/ui/row";
+import { Button } from "@/components/ui/button";
+import { DownloadIcon } from "@/components/icons";
 
 export function Hero() {
   return (
-    <section className="relative overflow-hidden border-b border-border">
-      <Container className="relative py-20 sm:py-28">
-        <p className="font-mono text-xs uppercase tracking-widest text-muted">
-          {heroContent.eyebrow}
-        </p>
-        <h1 className="mt-5 max-w-4xl font-serif text-5xl leading-[1.05] text-foreground sm:text-6xl lg:text-7xl">
-          {heroContent.headline.before}
-          <br />
-          <em className="italic">{heroContent.headline.emphasis}</em>
-          <br />
-          {heroContent.headline.after}
-        </h1>
+    <Row
+      className="md:pt-22 md:pb-16"
+      rail={heroContent.rail.map((line) => (
+        <span key={line} className="block">
+          {line}
+        </span>
+      ))}
+    >
+      <span className="inline-flex items-center gap-2 rounded-full bg-accent-soft px-3 py-1.5 font-mono text-xs font-medium">
+        <span className="h-2 w-2 rounded-full bg-accent" />
+        {heroContent.status}
+      </span>
 
-        <div className="mt-10 flex items-end justify-between gap-8">
-          <span className="vertical-label hidden font-mono text-[11px] uppercase text-muted lg:block">
-            {heroContent.est}
-          </span>
+      <h1 className="mt-6 mb-6 font-display text-[clamp(3rem,9vw,6.2rem)] leading-[0.92] font-bold tracking-[-0.045em] text-balance">
+        {siteConfig.name}
+      </h1>
 
-          <div className="max-w-md border-l border-border pl-6">
-            <p className="text-sm leading-relaxed text-muted sm:text-base">
-              {heroContent.description}
-            </p>
-            <div className="mt-6 flex items-center gap-3 font-mono text-xs uppercase tracking-widest">
-              <NavLink
-                href={heroContent.ctaPrimary.href}
-                className="text-foreground transition-colors hover:text-accent"
-              >
-                {heroContent.ctaPrimary.label}
-              </NavLink>
-              <span className="text-border-strong">—</span>
-              <NavLink
-                href={heroContent.ctaSecondary.href}
-                className="text-foreground transition-colors hover:text-accent"
-              >
-                {heroContent.ctaSecondary.label}
-              </NavLink>
-            </div>
-          </div>
-        </div>
-      </Container>
+      <p className="mb-8 max-w-[34rem] text-[1.4rem] leading-[1.45] text-pretty">
+        {heroContent.lede.before}
+        <em className="text-accent">{heroContent.lede.emphasis}</em>
+        {heroContent.lede.after}
+      </p>
 
-      <div className="border-t border-border">
-        <Container className="flex flex-col gap-2 py-5 font-mono text-xs uppercase tracking-widest text-muted sm:flex-row sm:items-center sm:justify-between">
-          <span>{heroContent.availabilityNote}</span>
-          <span className="flex items-center gap-2">
-            <span aria-hidden className="h-1.5 w-1.5 bg-foreground" />
-            {heroContent.location}
-          </span>
-        </Container>
+      <div className="flex flex-wrap items-center gap-3">
+        <Button href={siteConfig.links.resume} download>
+          <DownloadIcon className="h-4 w-4" />
+          Download résumé
+        </Button>
+        {socialLinks.map((link) => (
+          <Button key={link.label} href={link.href} variant="secondary">
+            {link.label} ↗
+          </Button>
+        ))}
       </div>
-    </section>
+
+      <div className="mt-9 flex flex-wrap gap-6 font-mono text-xs text-muted">
+        {heroContent.meta.map((item) => (
+          <span key={item}>{item}</span>
+        ))}
+      </div>
+    </Row>
   );
 }

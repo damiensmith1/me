@@ -52,7 +52,7 @@ export default function OpengraphImage() {
               color: palette.muted,
             }}
           >
-            Backend & Full-Stack Software Engineer
+            Software Engineer · Open to full-time roles
           </div>
         </div>
 
@@ -68,7 +68,7 @@ export default function OpengraphImage() {
             }}
           />
           <div style={{ display: "flex", fontSize: 24, color: palette.muted }}>
-            Distributed systems · Cloud infrastructure · AI-powered software
+            TypeScript · React · Node · AWS · AI agents
           </div>
         </div>
       </div>

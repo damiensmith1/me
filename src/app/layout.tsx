@@ -1,27 +1,26 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
+import { Bricolage_Grotesque, JetBrains_Mono, Newsreader } from "next/font/google";
 import "./globals.css";
 import { siteConfig } from "@/lib/content";
 import { palette } from "@/lib/palette";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const bricolage = Bricolage_Grotesque({
+  variable: "--font-bricolage",
   subsets: ["latin"],
   display: "swap",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-  display: "swap",
-});
-
-const instrumentSerif = Instrument_Serif({
-  variable: "--font-instrument-serif",
-  weight: "400",
+const newsreader = Newsreader({
+  variable: "--font-newsreader",
   style: ["normal", "italic"],
+  subsets: ["latin"],
+  display: "swap",
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-jetbrains-mono",
   subsets: ["latin"],
   display: "swap",
 });
@@ -38,15 +37,14 @@ export const metadata: Metadata = {
   keywords: [
     "Damien Smith",
     "Software Engineer",
-    "Backend Engineer",
-    "Full-Stack Developer",
-    "Freelance Software Development",
-    "Cloud Infrastructure",
-    "AWS",
-    "Next.js",
+    "Full-Stack Engineer",
+    "Product Engineer",
     "TypeScript",
-    "AI Integrations",
-    "Distributed Systems",
+    "React",
+    "Node.js",
+    "AWS",
+    "AI Agents",
+    "Developer Tools",
   ],
   alternates: {
     canonical: "/",
@@ -75,7 +73,10 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: palette.background,
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: palette.background },
+    { media: "(prefers-color-scheme: dark)", color: "#111315" },
+  ],
 };
 
 export default function RootLayout({
@@ -86,16 +87,9 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable} h-full antialiased`}
+      className={`${bricolage.variable} ${newsreader.variable} ${jetbrainsMono.variable} h-full antialiased`}
     >
-      <head>
-        {/* Scroll-reveal only turns content visible via IntersectionObserver;
-            without JS it would stay at opacity:0 forever, so force it visible. */}
-        <noscript>
-          <style>{`[data-reveal]{opacity:1!important;transform:none!important}`}</style>
-        </noscript>
-      </head>
-      <body className="flex min-h-full flex-col bg-background text-foreground">
+      <body className="flex min-h-full flex-col bg-background font-serif text-lg leading-[1.65] text-foreground">
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />
