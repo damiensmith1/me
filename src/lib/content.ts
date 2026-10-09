@@ -38,26 +38,26 @@ export const heroContent = {
   rail: ["Software engineer", "Toronto · Remote"],
   status: "Open to full-time roles",
   lede: {
-    before: "I build products end to end, from React front ends to AWS back ends, and lately ",
-    emphasis: "the AI agents and dev tools",
-    after: " that sit between them.",
+    before: "Full-stack engineer. Lately, building ",
+    emphasis: "the tools and context AI agents need",
+    after: " to do real work.",
   },
   meta: ["TypeScript · React · Node · AWS", "EN / FR"],
 };
 
 export const aboutContent = {
-  title: "Engineer first, with a habit of owning the product too.",
+  title: "How I got here.",
   paragraphs: [
-    "I studied Computer Engineering at Queen's University, where I also worked as a TA for a programming course, grading and giving feedback on code from more than forty students. Explaining why a piece of code is good turned out to be the fastest way to learn it myself.",
-    "In 2021 I joined Console One as one of its first two developers. We were building a deployment framework that could change itself, on an event-driven stack with Lambda auto-deployment and a custom authorization model. I led the early UI work and wrote the algorithms behind a version-controlled live code editor that shared markup across distributed source files.",
-    "At Moves Financial I worked across a fintech platform for gig workers, shipping React Native features and Node and MongoDB services used by thousands of people. That job taught me to treat money-adjacent software with care: plan it, review it, then ship it.",
-    "I went back to Console One in 2024 to lead product engineering. I set priorities with the founders, mentored four engineering interns, and designed an agentic workflow that pulled live API data with context-aware decisions and a flexible schema.",
-    "Since then I've been building Clance, my own developer tool on top of Claude Code, and I took on one freelance client. Now I'm looking for a full-time team where I can do the same kind of work: ship quickly and own what I build.",
-    "Outside of work I love playing sports and running. I also love building things just for fun, which is how most of the projects on this site started.",
+    "I didn't grow up coding. I picked Computer Engineering at Queen's because I liked math and software seemed cool, and it didn't really click until my first internship, when I saw code I'd written turn into something people could use. I've been hooked since.",
+    "That internship was at Console One, a startup founded by ex-Amazon engineering leaders. I was one of its first two developers, and we were building a browser IDE on the idea that configuring the cloud, not writing code, was the real bottleneck. I built the first prototype and the multiplayer version control underneath it, and kept working part-time through school.",
+    "In between, I spent a year at Moves Financial, a fintech for gig workers, working full-stack on their app in React Native, Node.js and MongoDB. It was my first time on an established engineering team, shipping to thousands of users.",
+    "After graduating I went back to Console One and became Head of Product Engineering six months later. I led a small team of interns on the IDE, then became the main engineer on StoryLens, a local-first desktop app that connects to a team's tools and writes their reports. Most of my recent work is the layer that helps AI agents use tools well: connectors, context management and workflows. I'm still pushing StoryLens forward.",
+    "Now I'm looking for a hands-on engineering role on a product team I can grow with.",
+    "Outside of work I play sports and run. I'm also the kind of person who builds something when I want it to exist, which is where most of the projects on this site came from.",
   ],
   experience: [
-    { when: "2024 – 2026", role: "Head of Product Engineering", org: "Console One" },
-    { when: "2022 – 2023", role: "Software Engineer", org: "Moves Financial" },
+    { when: "2024 – Present", role: "Head of Product Engineering", org: "Console One · StoryLens · Shared Office" },
+    { when: "2022 – 2023", role: "Software Engineer Intern", org: "Moves Financial" },
     { when: "2021 – 2022", role: "Software Developer", org: "Console One" },
     { when: "2019 – 2024", role: "B.A.Sc. Computer Engineering", org: "Queen's University" },
   ] as ExperienceItem[],
@@ -68,29 +68,11 @@ export const projectsContent = {
   allLabel: "See all projects",
   pageTitle: "Projects",
   pageIntro:
-    "Libraries, experiments, and small apps I've built outside of work. Most are open source on GitHub.",
+    "Libraries, experiments, and small apps I've built outside of work just for fun.",
 };
 
-// Posts themselves are Markdown files in content/blog/ (see src/lib/blog.ts).
-// The Writing section and its nav link stay hidden until one is published.
-export const writingContent = {
-  title: "Notes on building with agents.",
-  allLabel: "All writing",
-  pageTitle: "Writing",
-  pageIntro: "Notes on building software, mostly with and for AI agents.",
-};
-
-export const resumeContent = {
-  title: "Damien Smith — Résumé",
-  detail: "PDF · one page",
-  cta: "Download PDF",
-};
-
-export function getNavItems(hasPosts: boolean): NavItem[] {
-  return [
-    { label: "About", href: "/#about" },
-    { label: "Projects", href: "/projects" },
-    ...(hasPosts ? [{ label: "Writing", href: "/blog" }] : []),
-    { label: "Résumé", href: "/#resume" },
-  ];
-}
+export const navItems: NavItem[] = [
+  { label: "About", href: "/#about" },
+  { label: "Projects", href: "/projects" },
+  { label: "Resume", href: siteConfig.links.resume },
+];

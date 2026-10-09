@@ -32,7 +32,8 @@ export function Terminal({ lines, className }: { lines: string[]; className?: st
 }
 
 // Every card links to the project's own page. `featured` is the large
-// home-page card; `withMedia` adds a thumbnail for the /projects grid.
+// home-page card; `withMedia` adds a thumbnail for the /projects grid. Either
+// shows a screenshot only when the project has one.
 export function ProjectCard({
   project,
   featured = false,
@@ -50,12 +51,12 @@ export function ProjectCard({
         featured ? "p-8" : "p-6",
       )}
     >
-      {withMedia ? (
+      {(withMedia || featured) && project.media[0] ? (
         <MediaFrame
           media={project.media[0]}
-          project={project}
           className="mb-2"
-          sizes="(min-width: 640px) 20rem, 100vw"
+          sizes={featured ? "(min-width: 768px) 40rem, 100vw" : "(min-width: 640px) 20rem, 100vw"}
+          priority={featured}
         />
       ) : null}
       <div className="flex flex-wrap items-baseline justify-between gap-4">

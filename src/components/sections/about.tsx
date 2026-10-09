@@ -7,7 +7,7 @@ export function About() {
       <RowTitle>{aboutContent.title}</RowTitle>
 
       {aboutContent.paragraphs.map((paragraph, i) => (
-        <p key={i} className={i === 0 ? "drop-cap mb-5" : "mb-5"}>
+        <p key={i} className="mb-5">
           {paragraph}
         </p>
       ))}

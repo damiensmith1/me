@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 
-const sectionIds = ["about", "projects", "writing", "resume"];
+const sectionIds = ["about", "projects"];
 
 // Keeps the URL hash in sync with whichever section is actually in view,
 // using replaceState so free scrolling never scrolls the page (like a real

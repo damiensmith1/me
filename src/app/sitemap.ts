@@ -1,7 +1,6 @@
 import type { MetadataRoute } from "next";
 import { siteConfig } from "@/lib/content";
 import { projects } from "@/lib/projects";
-import { getPosts } from "@/lib/blog";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const routes: Array<{
@@ -14,14 +13,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...projects.map((project) => ({
       path: `/projects/${project.slug}`,
       changeFrequency: "monthly" as const,
-      priority: 0.6,
-    })),
-    ...(getPosts().length > 0
-      ? [{ path: "/blog", changeFrequency: "weekly" as const, priority: 0.7 }]
-      : []),
-    ...getPosts().map((post) => ({
-      path: `/blog/${post.slug}`,
-      changeFrequency: "yearly" as const,
       priority: 0.6,
     })),
   ];

@@ -8,7 +8,7 @@ export function Projects() {
   const [featured, ...rest] = homeProjects;
 
   return (
-    <Row id="projects" rail="Projects">
+    <Row id="projects" rail="Projects" last>
       <RowTitle>{projectsContent.title}</RowTitle>
       <div className="grid gap-5">
         {featured ? <ProjectCard project={featured} featured /> : null}

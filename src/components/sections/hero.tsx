@@ -31,7 +31,7 @@ export function Hero() {
       <div className="flex flex-wrap items-center gap-3">
         <Button href={siteConfig.links.resume} download>
           <DownloadIcon className="h-4 w-4" />
-          Download résumé
+          Download resume
         </Button>
         {socialLinks.map((link) => (
           <Button key={link.label} href={link.href} variant="secondary">

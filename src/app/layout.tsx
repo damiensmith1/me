@@ -1,8 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Bricolage_Grotesque, JetBrains_Mono, Newsreader } from "next/font/google";
 import "./globals.css";
-import { getNavItems, siteConfig } from "@/lib/content";
-import { getPosts } from "@/lib/blog";
+import { navItems, siteConfig } from "@/lib/content";
 import { palette } from "@/lib/palette";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
@@ -91,7 +90,7 @@ export default function RootLayout({
       className={`${bricolage.variable} ${newsreader.variable} ${jetbrainsMono.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col bg-background font-serif text-lg leading-[1.65] text-foreground">
-        <Header navItems={getNavItems(getPosts().length > 0)} />
+        <Header navItems={navItems} />
         <main className="flex-1">{children}</main>
         <Footer />
       </body>

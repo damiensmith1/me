@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getProject, projectGroups, projects } from "@/lib/projects";
+import { getProject, projects } from "@/lib/projects";
 import { Row, RowTitle } from "@/components/ui/row";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
@@ -41,7 +41,6 @@ export default async function ProjectPage({
 
   const index = projects.indexOf(project);
   const next = projects[(index + 1) % projects.length];
-  const group = projectGroups.find((g) => g.id === project.group);
 
   const links = [
     project.links.live && { label: "Try it", href: project.links.live, primary: true },
@@ -59,7 +58,6 @@ export default async function ProjectPage({
               ← All projects
             </Link>
             <span className="block">{project.year}</span>
-            {group ? <span className="block">{group.label}</span> : null}
           </>
         }
       >
@@ -85,11 +83,13 @@ export default async function ProjectPage({
         ) : null}
       </Row>
 
-      <section className="border-b border-rule">
-        <Container className="py-10 md:py-14">
-          <MediaGallery project={project} />
-        </Container>
-      </section>
+      {project.media.length > 0 ? (
+        <section className="border-b border-rule">
+          <Container className="py-10 md:py-14">
+            <MediaGallery project={project} />
+          </Container>
+        </section>
+      ) : null}
 
       <Row rail="About">
         <RowTitle>What it does</RowTitle>
@@ -115,6 +115,17 @@ export default async function ProjectPage({
 
         {project.terminal ? <Terminal lines={project.terminal} className="mt-8 bg-surface" /> : null}
       </Row>
+
+      {project.learnings?.length ? (
+        <Row rail="Learnings">
+          <RowTitle>What I learned</RowTitle>
+          {project.learnings.map((paragraph) => (
+            <p key={paragraph} className="mb-5">
+              {paragraph}
+            </p>
+          ))}
+        </Row>
+      ) : null}
 
       <Row rail="Next" last>
         <Link href={`/projects/${next.slug}`} className="group block">

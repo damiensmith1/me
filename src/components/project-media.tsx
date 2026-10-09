@@ -2,38 +2,20 @@ import Image from "next/image";
 import type { Project, ProjectMedia } from "@/lib/projects";
 import { cn } from "@/lib/utils";
 
-// A 16:10 frame that shows one screenshot or video, or a hatched placeholder
-// until media is added for the project.
+// A 16:10 frame that shows one screenshot or video. Landscape media fills the
+// frame from the top; portrait media is fitted whole inside it.
 export function MediaFrame({
   media,
-  project,
   className,
   sizes = "(min-width: 768px) 40rem, 100vw",
   priority,
 }: {
-  media?: ProjectMedia;
-  project: Project;
+  media: ProjectMedia;
   className?: string;
   sizes?: string;
   priority?: boolean;
 }) {
   const frame = "relative aspect-[16/10] w-full overflow-hidden rounded-lg border border-rule bg-surface";
-
-  if (!media) {
-    return (
-      <div
-        className={cn(frame, "grid place-items-center", className)}
-        style={{
-          backgroundImage:
-            "repeating-linear-gradient(135deg, var(--rule) 0 1px, transparent 1px 12px)",
-        }}
-      >
-        <span className="rounded bg-background px-2.5 py-1 font-mono text-xs text-muted">
-          {project.name} · screenshot coming soon
-        </span>
-      </div>
-    );
-  }
 
   if (media.type === "video") {
     return (
@@ -59,7 +41,7 @@ export function MediaFrame({
         fill
         sizes={sizes}
         priority={priority}
-        className="object-cover object-top"
+        className={media.height > media.width ? "object-contain" : "object-cover object-top"}
       />
     </div>
   );
@@ -68,12 +50,13 @@ export function MediaFrame({
 // Full gallery for a project page: the first item large, the rest in a grid.
 export function MediaGallery({ project }: { project: Project }) {
   const [first, ...rest] = project.media;
+  if (!first) return null;
 
   return (
     <div className="grid gap-4">
       <figure className="grid gap-2">
-        <MediaFrame media={first} project={project} priority sizes="(min-width: 1024px) 60rem, 100vw" />
-        {first?.caption ? (
+        <MediaFrame media={first} priority sizes="(min-width: 1024px) 60rem, 100vw" />
+        {first.caption ? (
           <figcaption className="font-mono text-xs text-muted">{first.caption}</figcaption>
         ) : null}
       </figure>
@@ -81,7 +64,7 @@ export function MediaGallery({ project }: { project: Project }) {
         <div className="grid gap-4 sm:grid-cols-2">
           {rest.map((media) => (
             <figure key={media.src} className="grid gap-2">
-              <MediaFrame media={media} project={project} sizes="(min-width: 768px) 30rem, 100vw" />
+              <MediaFrame media={media} sizes="(min-width: 768px) 30rem, 100vw" />
               {media.caption ? (
                 <figcaption className="font-mono text-xs text-muted">{media.caption}</figcaption>
               ) : null}
