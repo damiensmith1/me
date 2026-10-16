@@ -50,6 +50,8 @@ export const projects: Project[] = [
       "Press ⌥Space and a small floating terminal opens near the cursor, running the actual claude CLI with my own skills, MCP servers, hooks and plugins. Hide it and the session keeps running in the background.",
       "Clance gives Claude a set of computer-use tools over a local MCP server: look at the screen, read a window's text, read the selection or the focused field, list open windows, click a control by its label, type into a field, or bring an app forward. Other apps are read as text through the macOS Accessibility API, with a screenshot only when a picture is needed. Nothing is captured in the background, password fields can't be read, and every action on another app goes through Claude Code's normal approval prompt.",
       "The main window turns it into a dev app: a list of every Claude Code session on the Mac with search, pinning and split panes, a live git diff with stage, commit and push, and a small CodeMirror editor. Every session is a background claude agent that Clance attaches to, so closing a window never ends the work. ⌥D starts on-device dictation in any app.",
+      "Lode tabs bring in lode-graph: a project's code as cards on a canvas, opened from Files or by asking a question with /. Ask Claude opens a session beside the canvas that can read the cards, search the rest of the code, build flows and draw notes with labelled arrows, so an answer can be a picture, like a design laid out next to the code it would change. A lode tab can also follow a session as it writes, in any folder or worktree, putting each edit on the canvas.",
+      "Each project's lode runs in its own Electron utility process, because indexing a large repository is seconds of synchronous work that would freeze the app, and the window talks to it over a message port with no server in between. lode-graph's canvas tools are mounted on the same local MCP server sessions already use, so every Claude session can draw on the canvases. Following works through hooks every Clance session gets: after an edit, a prompt or the end of a turn, the session posts to Clance, which updates the canvas. Ask Claude opens at once because a spare session is kept warm in the folder of the lode tab you're on.",
       "Old sessions kept losing their tools. Claude Code saves a session's MCP config when it starts, but my tools server picked a new port and token every time Clance launched, so older sessions pointed at a server that no longer existed. The fix was a fixed port per install, a token read fresh on every request, and returning 404 instead of 400 for unknown sessions, which makes the client reconnect instead of giving up.",
     ],
     highlights: [
@@ -69,7 +71,49 @@ export const projects: Project[] = [
       { type: "image", src: "/projects/clance/split.png", alt: "Two Claude Code sessions side by side in split panes.", width: 2800, height: 1800, caption: "Two sessions in split panes." },
       { type: "image", src: "/projects/clance/changes.png", alt: "A git diff in the Changes pane with stage and commit controls.", width: 2936, height: 1842, caption: "Live git diff with stage, commit and push." },
       { type: "image", src: "/projects/clance/editor.png", alt: "The built-in editor beside the file explorer.", width: 2932, height: 1840, caption: "The built-in editor." },
+      { type: "image", src: "/projects/clance/lode.png", alt: "A lode canvas with a rate-limiter design drawn as notes and arrows beside the real code it would change, next to the Claude session that drew it.", width: 2928, height: 1842, caption: "A Claude session drawing a design on a lode canvas, next to the real code." },
       { type: "image", src: "/projects/clance/dictation.png", alt: "Dictating an email reply in Mail with the Clance dictation pill.", width: 2800, height: 1720, caption: "On-device dictation into any app." },
+    ],
+  },
+  {
+    slug: "lode-graph",
+    name: "lode-graph",
+    summary:
+      "Read a codebase as a flow of real code. It builds a live graph of how a project fits together and lays it out as cards of actual code joined by arrows. Ask a question with / and the answer comes back as a flow.",
+    description: [
+      "Code is stored as text you read top to bottom, but what it describes is a web of functions, types and state with data moving between them, and more and more of it is written by AI and read afterwards. lode builds a live graph of a project (calls, references, shared state, and messages across processes like Electron IPC) and shows it as cards of real code on a canvas. Chips on each line show what it leads to; click one and that code opens beside it with an arrow. Point it at your git changes and it puts the diff on the cards and shows what might break. You can edit right in a card.",
+      "TypeScript and JavaScript are read through the TypeScript compiler, and Python and Ruby through tree-sitter, along with their frameworks' conventions: routes, views, templates, jobs and commands become entry points, and the links frameworks make by name (a Rails route to its action, a Django template to its view, a screen name to its React Native screen) become arrows. The graph is incremental: reopening an unchanged project takes 24ms and a changed file re-indexes in about 300ms.",
+      "Ask with / in plain words, like \"how do we create the tabs\". It isn't an LLM writing an answer. A text search finds candidate symbols, forgiving typos, then Jev judges in one request what kind of question it is and where to start, and lode follows the graph from there with Jev deciding whether each next step belongs. Every card is real code, usually in under half a second. On an eval of 51 questions over real repos it picked the right starting point 84% of the time.",
+      "I also tried letting Jev crawl the project instead of matching words. It did better where the question's words weren't the code's (82% coverage against 68%), but it was slower and picked worse starting points overall, so it's an option rather than the default. Synonyms the code never uses are still the known limit.",
+    ],
+    highlights: [
+      "A library first: graph core, an embeddable canvas built from web components, and an MCP server for agents",
+      "Embedded in Clance, where Claude sessions build flows and draw note cards beside the real code",
+      "105 commits and five npm releases in its first six days",
+    ],
+    tags: ["TypeScript", "tree-sitter", "Web Components", "MCP", "Jev"],
+    year: "2026",
+    links: {
+      repo: github("lode-graph"),
+      package: { label: "npm", href: "https://www.npmjs.com/package/lode-graph" },
+    },
+    media: [
+      {
+        type: "image",
+        src: "/projects/lode-graph/ask.png",
+        alt: "The answer to \"how do we create the tabs\": six cards of code, starting at addTab, with arrows to closeTab, select and createView and to the tabs state they read and write.",
+        width: 3200,
+        height: 1920,
+        caption: "Asking \"how do we create the tabs\": six cards of real code, built in 0.6s.",
+      },
+      {
+        type: "image",
+        src: "/projects/lode-graph/changes.png",
+        alt: "The changes sidebar listing the changed declarations in one file, beside two cards showing the diff on askFlow and similar.",
+        width: 3200,
+        height: 1920,
+        caption: "Git changes: the changed declarations in the sidebar, the diff on the cards.",
+      },
     ],
   },
   {
@@ -352,7 +396,7 @@ export const projects: Project[] = [
 ];
 
 // Clance is shown large; the next two sit beside each other below it.
-export const homeProjects = ["clance", "llm-cassette", "semantic-pubsub-jev"]
+export const homeProjects = ["clance", "lode-graph", "llm-cassette"]
   .map((slug) => projects.find((p) => p.slug === slug))
   .filter((p): p is Project => p !== undefined);
 
